@@ -1,26 +1,73 @@
 @import "tailwindcss";
 
+@theme {
+  --color-brand: #ff4d6d;
+  --color-brand-dark: #e03256;
+  --color-sun: #ffb703;
+  --color-sky: #4cc9f0;
+  --color-grass: #52b788;
+  --color-grape: #9d4edd;
+  --font-display: var(--font-baloo), "Baloo 2", system-ui, sans-serif;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #fdfcff;
+  --foreground: #1b1b25;
+  --surface: #ffffff;
+  --border: #e8e6f0;
+  --muted: #6b6a7b;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #14131a;
+    --foreground: #f2f1f7;
+    --surface: #1e1d27;
+    --border: #2f2e3c;
+    --muted: #a5a3b5;
+  }
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-surface: var(--surface);
+  --color-line: var(--border);
+  --color-muted: var(--muted);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Nền vui nhộn cho chế độ trẻ em */
+.kid-bg {
+  background:
+    radial-gradient(circle at 12% 8%, rgba(76, 201, 240, 0.35), transparent 42%),
+    radial-gradient(circle at 88% 4%, rgba(255, 183, 3, 0.35), transparent 40%),
+    radial-gradient(circle at 50% 100%, rgba(157, 78, 221, 0.28), transparent 55%),
+    var(--background);
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.pop-in {
+  animation: pop-in 0.35s ease-out both;
 }
