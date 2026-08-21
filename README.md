@@ -5,6 +5,8 @@ trong playlist bố mẹ đã duyệt**. Phụ huynh tuyển chọn một lần,
 cộng đồng phụ huynh khác dùng lại — không ai phải ngồi lọc video từ đầu.
 
 > Sản phẩm dự thi Hackathon Oeditions 2026 (22/08/2026).
+>
+> **Bản chạy thật: https://youtube-kids-seven.vercel.app** — đăng nhập `demo@kidtube.vn` / `123456`, PIN `1234`.
 
 ## Tính năng đã chạy thật
 
@@ -115,5 +117,8 @@ src/
 
 ## Deploy
 
-Đang chạy trên Vercel, database Postgres (Neon) gắn qua Vercel Marketplace. Biến môi trường cần
-có trên Vercel: `DATABASE_URL`, `AUTH_SECRET`, và `YOUTUBE_API_KEY` nếu muốn bật tìm kiếm.
+- Bản production: https://youtube-kids-seven.vercel.app
+- Hosting: Vercel; database: Postgres (Neon) gắn qua Vercel Marketplace.
+- Biến môi trường trên Vercel: `DATABASE_URL` + `DATABASE_URL_UNPOOLED` (Neon tự gắn),
+  `AUTH_SECRET`, và `YOUTUBE_API_KEY` nếu muốn bật tìm kiếm video.
+- Deploy lại: `vercel --prod` (hoặc kết nối repo trong Vercel để tự deploy mỗi lần push).
