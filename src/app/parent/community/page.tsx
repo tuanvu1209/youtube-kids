@@ -24,6 +24,7 @@ export default async function CommunityPage({ searchParams }: PageProps<"/parent
           take: 4,
           orderBy: { position: "asc" },
           include: { video: true },
+          where: { video: { hidden: false } },
         },
         _count: { select: { items: true } },
       },
@@ -41,7 +42,11 @@ export default async function CommunityPage({ searchParams }: PageProps<"/parent
   );
 
   return (
-    <ParentShell parentName={parent.name} active="community">
+    <ParentShell
+      parentName={parent.name}
+      active="community"
+      isAdmin={parent.email === (process.env.ADMIN_EMAIL ?? "demo@kidtube.vn")}
+    >
       <header className="mb-6">
         <h1 className="text-2xl font-bold">Playlist từ cộng đồng phụ huynh</h1>
         <p className="text-sm text-muted">

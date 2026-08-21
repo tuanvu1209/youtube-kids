@@ -362,7 +362,32 @@ export async function reportVideoAction(
   const video = await prisma.video.findUnique({ where: { id: videoId } });
   if (!video) return { error: "Không tìm thấy video." };
 
+  const existing = await prisma.report.findUnique({
+    where: { parentId_videoId: { parentId: parent.id, videoId } },
+  });
+  if (existing) return { error: "Bạn đã báo cáo video này rồi." };
+
   await prisma.report.create({ data: { parentId: parent.id, videoId, reason } });
+
+  const count = await prisma.report.count({ where: { videoId } });
+  if (count >= 3) {
+    await prisma.video.update({ where: { id: videoId }, data: { hidden: true } });
+  }
+
   revalidatePath("/parent/community");
+  revalidatePath("/parent/admin/reports");
+  return { ok: true };
+}
+
+export async function setVideoHiddenAction(
+  videoId: string,
+  hidden: boolean,
+): Promise<ActionState> {
+  const parent = await requireParent();
+  const adminEmail = process.env.ADMIN_EMAIL ?? "demo@kidtube.vn";
+  if (parent.email !== adminEmail) return { error: "Không có quyền admin." };
+  await prisma.video.update({ where: { id: videoId }, data: { hidden } });
+  revalidatePath("/parent/community");
+  revalidatePath("/parent/admin/reports");
   return { ok: true };
 }

@@ -40,7 +40,11 @@ export default async function ParentDashboard() {
   const kidChips = kids.map((k) => ({ id: k.id, name: k.name, avatar: k.avatar }));
 
   return (
-    <ParentShell parentName={parent.name} active="overview">
+    <ParentShell
+      parentName={parent.name}
+      active="overview"
+      isAdmin={parent.email === (process.env.ADMIN_EMAIL ?? "demo@kidtube.vn")}
+    >
       <section className="mb-10">
         <div className="mb-4 flex items-center justify-between">
           <h1 className="text-2xl font-bold">Hồ sơ các bé</h1>

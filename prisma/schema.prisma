@@ -65,6 +65,7 @@ model Video {
   channelTitle String   @default("")
   thumbnailUrl String   @default("")
   durationSec  Int      @default(0)
+  hidden       Boolean  @default(false)
   createdAt    DateTime @default(now())
 
   items   PlaylistItem[]
@@ -122,6 +123,7 @@ model Report {
   parent Parent @relation(fields: [parentId], references: [id], onDelete: Cascade)
   video  Video  @relation(fields: [videoId], references: [id], onDelete: Cascade)
 
+  @@unique([parentId, videoId])
   @@index([videoId])
 }
 

@@ -3,11 +3,12 @@ import { logoutAction } from "@/lib/actions";
 
 type Props = {
   parentName: string;
-  active: "overview" | "community";
+  active: "overview" | "community" | "admin";
+  isAdmin?: boolean;
   children: React.ReactNode;
 };
 
-export default function ParentShell({ parentName, active, children }: Props) {
+export default function ParentShell({ parentName, active, isAdmin, children }: Props) {
   const linkClass = (key: Props["active"]) =>
     `rounded-full px-4 py-2 text-sm font-semibold transition ${
       active === key ? "bg-brand text-white" : "hover:bg-brand/10"
@@ -35,6 +36,11 @@ export default function ParentShell({ parentName, active, children }: Props) {
             <Link href="/parent/community" className={linkClass("community")}>
               Cộng đồng
             </Link>
+            {isAdmin && (
+              <Link href="/parent/admin/reports" className={linkClass("admin")}>
+                🛡️ Admin
+              </Link>
+            )}
           </nav>
 
           <div className="ml-auto flex items-center gap-3">
