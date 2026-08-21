@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useActionState, useState, useTransition } from "react";
 import {
   addVideoByLinkAction,
@@ -104,13 +103,22 @@ export default function AddVideoPanel({
                 key={video.youtubeId}
                 className="flex gap-3 rounded-2xl border border-line p-3"
               >
-                <Image
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
                   src={video.thumbnailUrl}
                   alt=""
                   width={120}
                   height={68}
-                  unoptimized
                   className="h-[68px] w-[120px] shrink-0 rounded-xl object-cover"
+                  onError={(e) => {
+                    const img = e.currentTarget;
+                    const id = video.youtubeId;
+                    if (img.src.includes("hqdefault")) {
+                      img.src = `https://i.ytimg.com/vi/${id}/mqdefault.jpg`;
+                    } else if (img.src.includes("mqdefault")) {
+                      img.src = `https://i.ytimg.com/vi/${id}/default.jpg`;
+                    }
+                  }}
                 />
                 <div className="min-w-0 flex-1">
                   <p className="line-clamp-2 text-sm font-semibold">{video.title}</p>
